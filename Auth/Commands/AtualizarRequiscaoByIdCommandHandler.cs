@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Connect.Auth.Handlers
 {
-    public class AtualizarRequisicaoByIdCommandHandler : IRequestHandler<AtualizarRequisicaoByIdCommand, RequisicaoModel>
+    public class AtualizarRequisicaoByIdCommandHandler : IRequestHandler<AtualizarRequisicaoByIdCommand, RequisicoesDTO>
     {
         private readonly DatabaseContext _context;
 
@@ -17,7 +17,7 @@ namespace Connect.Auth.Handlers
             _context = context;
         }
 
-        public async Task<RequisicaoModel> Handle(AtualizarRequisicaoByIdCommand request, CancellationToken cancellationToken)
+        public async Task<RequisicoesDTO> Handle(AtualizarRequisicaoByIdCommand request, CancellationToken cancellationToken)
         {
             var dto = await _context.Requisitos
                 .AsNoTracking()
@@ -32,7 +32,7 @@ namespace Connect.Auth.Handlers
                 _context.Update(dto);
                 _context.SaveChanges();
 
-                return request.Requisicao;
+                return dto;
             }
 
             return null;

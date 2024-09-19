@@ -13,6 +13,7 @@ namespace Connect.Auth.Context
         {
             LoginEntityConfiguration(modelBuilder);
             FuncionarioEntityConfiguration(modelBuilder);
+            MensagemEntityConfiguration(modelBuilder);
         }
     }
 }

@@ -68,6 +68,18 @@ namespace Connect.Controllers
             return Ok(result);
         }
 
+        [HttpGet("funcionarios")]
+        public async Task<ActionResult<string>> Funcionarios()
+        {
+
+            var result = await _mediator.Send(new BuscarFuncionariosQuery());
+            if (result == null)
+            {
+                return Unauthorized();
+            }
+
+            return Ok(result);
+        }
         [HttpGet("listaRequisicoes")]
         public async Task<ActionResult<string>> ListaRequisicoes()
         {
