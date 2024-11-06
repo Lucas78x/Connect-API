@@ -24,6 +24,11 @@ namespace Connect.Auth.Handlers
                 .Where(u => u.Id == request.Id)
                 .FirstOrDefaultAsync(cancellationToken);
 
+            if (usuario?.Funcionario != null)
+            {
+                usuario.Funcionario.MaskCPF();
+                usuario.Funcionario.MaskRG();
+            }
 
             return usuario.Funcionario;
         }

@@ -1,0 +1,52 @@
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
+
+#nullable disable
+
+namespace Connect.Migrations
+{
+    /// <inheritdoc />
+    public partial class FeriasImp : Migration
+    {
+        /// <inheritdoc />
+        protected override void Up(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.CreateTable(
+                name: "Ferias",
+                schema: "Funcionarios",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    DataInicio = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DataFim = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Observacoes = table.Column<string>(type: "varchar(max)", nullable: false),
+                    OwnerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Ferias", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Ferias_Funcionario_OwnerId",
+                        column: x => x.OwnerId,
+                        principalSchema: "Funcionarios",
+                        principalTable: "Funcionario",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Ferias_OwnerId",
+                schema: "Funcionarios",
+                table: "Ferias",
+                column: "OwnerId");
+        }
+
+        /// <inheritdoc />
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropTable(
+                name: "Ferias",
+                schema: "Funcionarios");
+        }
+    }
+}

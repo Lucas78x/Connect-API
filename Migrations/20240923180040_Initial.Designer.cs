@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Connect.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20240814003009_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20240923180040_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,44 @@ namespace Connect.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("Connect.Auth.DTO.EventoDTO", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("Data")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("Data");
+
+                    b.Property<string>("Descricao")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Descricao");
+
+                    b.Property<string>("Link")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Link");
+
+                    b.Property<string>("Local")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Local");
+
+                    b.Property<int>("Setor")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Titulo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Titulo");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Eventos", "Eventos");
+                });
 
             modelBuilder.Entity("Connect.Auth.DTO.FuncionarioDTO", b =>
                 {
@@ -102,6 +140,44 @@ namespace Connect.Migrations
                     b.ToTable("Usuario", "Usuarios");
                 });
 
+            modelBuilder.Entity("Connect.Auth.DTO.MensagemDTO", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("MensagemId");
+
+                    b.Property<string>("Conteudo")
+                        .IsRequired()
+                        .HasColumnType("varchar(max)");
+
+                    b.Property<DateTime>("DataEnvio")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("DataEnvio");
+
+                    b.Property<Guid>("DestinatarioId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("DestinatarioId");
+
+                    b.Property<bool>("Lida")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false)
+                        .HasColumnName("Lida");
+
+                    b.Property<Guid>("RemetenteId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("RemetenteId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DestinatarioId");
+
+                    b.HasIndex("RemetenteId");
+
+                    b.ToTable("Mensagem", "Chat");
+                });
+
             modelBuilder.Entity("Connect.Auth.DTO.RequisicoesDTO", b =>
                 {
                     b.Property<Guid>("Id")
@@ -148,6 +224,25 @@ namespace Connect.Migrations
                         .IsRequired();
 
                     b.Navigation("Funcionario");
+                });
+
+            modelBuilder.Entity("Connect.Auth.DTO.MensagemDTO", b =>
+                {
+                    b.HasOne("Connect.Auth.DTO.FuncionarioDTO", "Destinatario")
+                        .WithMany()
+                        .HasForeignKey("DestinatarioId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Connect.Auth.DTO.FuncionarioDTO", "Remetente")
+                        .WithMany()
+                        .HasForeignKey("RemetenteId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Destinatario");
+
+                    b.Navigation("Remetente");
                 });
 #pragma warning restore 612, 618
         }

@@ -17,7 +17,7 @@ namespace Connect.Auth.DTO
         public TipoPermissaoEnum Permissao { get; set; }
         public FuncionarioDTO() { }
 
-        public FuncionarioDTO(string nome, string sobrenome, string cpf, string rg, TipoGeneroEnum genero, string email, DateTime dataNascimento,string cargo, TipoPermissaoEnum permissao)
+        public FuncionarioDTO(string nome, string sobrenome, string cpf, string rg, TipoGeneroEnum genero, string email, DateTime dataNascimento, string cargo, TipoPermissaoEnum permissao)
         {
             Id = Guid.NewGuid();
             Nome = nome;
@@ -29,9 +29,27 @@ namespace Connect.Auth.DTO
             DataNascimento = dataNascimento;
             Cargo = cargo;
             Permissao = permissao;
-            
+
         }
- 
+
+        public void MaskCPF()
+        {
+            CPF = CPF.Substring(0, 3) + ".XXX.XXX-XX";
+        }
+
+        public void MaskRG()
+        {
+            if (RG.Length >= 9)
+            {
+                RG = RG.Substring(0, 2) + ".XXX.XXX-X";
+            }
+            else
+            {
+
+                RG = RG.Substring(0, 1) + ".XXX.XX-X";
+            }
+        }
+
     }
 
 

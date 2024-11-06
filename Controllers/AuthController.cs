@@ -5,6 +5,7 @@ using Connect.Auth.Enums;
 using Connect.Auth.Models;
 using Connect.Auth.Query;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Connect.Controllers
@@ -41,7 +42,7 @@ namespace Connect.Controllers
         [HttpPost("login")]
         public async Task<ActionResult<string>> Login([FromBody]LoginModel login)
         {
-
+            
             var result = await _mediator.Send(new ConsultarUsuarioQuery(login.Username,login.PasswordHash));
             if (result == null)
             {

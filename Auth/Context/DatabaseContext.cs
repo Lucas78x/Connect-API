@@ -14,6 +14,10 @@ namespace Connect.Auth.Context
             LoginEntityConfiguration(modelBuilder);
             FuncionarioEntityConfiguration(modelBuilder);
             MensagemEntityConfiguration(modelBuilder);
+            EventosEntityConfiguration(modelBuilder);
+            ComunicadosEntityConfiguration(modelBuilder);
+            AtestadoEntityConfiguration(modelBuilder);
+            FeriasEntityConfiguration(modelBuilder);
         }
     }
 }

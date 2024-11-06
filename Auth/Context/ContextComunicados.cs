@@ -6,11 +6,11 @@ namespace Connect.Auth.Context
 {
     public partial class DatabaseContext : DbContext
     {
-        public DbSet<MensagemDTO> Mensagens { get; set; }
-      
-        internal static void MensagemEntityConfiguration(ModelBuilder builder)
+        public DbSet<ComunicadosDTO> Comunicados { get; set; }
+
+        internal static void ComunicadosEntityConfiguration(ModelBuilder builder)
         {
-            builder.ApplyConfiguration(new AtestadoConfiguration());
+            builder.ApplyConfiguration(new ComunicadosConfiguration());
         }
     }
 }

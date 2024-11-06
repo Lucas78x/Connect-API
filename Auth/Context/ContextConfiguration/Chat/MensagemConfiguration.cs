@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Connect.Auth.Context.ContextConfiguration.Chat
 {
-    public class MensagemConfiguration : IEntityTypeConfiguration<MensagemDTO>
+    public class AtestadoConfiguration : IEntityTypeConfiguration<MensagemDTO>
     {
         public void Configure(EntityTypeBuilder<MensagemDTO> builder)
         {
