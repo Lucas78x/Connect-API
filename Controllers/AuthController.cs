@@ -69,6 +69,20 @@ namespace Connect.Controllers
             return Ok(result);
         }
 
+        [HttpGet("FuncionarioById")]
+        public async Task<ActionResult<string>> FuncionarioById(Guid Id)
+        {
+
+            var result = await _mediator.Send(new ConsultarFuncionarioByIdQuery(Id));
+            if (result == null)
+            {
+                return Unauthorized();
+            }
+
+
+            return Ok(result);
+        }
+
         [HttpGet("funcionarios")]
         public async Task<ActionResult<string>> Funcionarios()
         {

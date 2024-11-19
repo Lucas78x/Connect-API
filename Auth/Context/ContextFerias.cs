@@ -1,6 +1,4 @@
-﻿
-
-using Connect.Auth.Context.ContextConfiguration.Ferias;
+﻿using Connect.Auth.Context.ContextConfiguration.Ferias;
 using Connect.Auth.DTO;
 using Microsoft.EntityFrameworkCore;
 

@@ -4,6 +4,7 @@ using Connect.Auth.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Connect.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20241112181833_FolhaPontoImp")]
+    partial class FolhaPontoImp
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -293,42 +296,6 @@ namespace Connect.Migrations
                     b.HasIndex("RemetenteId");
 
                     b.ToTable("Mensagem", "Chat");
-                });
-
-            modelBuilder.Entity("Connect.Auth.DTO.RelatoBugDTO", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<DateTime>("Data")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("Data");
-
-                    b.Property<DateTime>("DataCriacao")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("DataCriacao");
-
-                    b.Property<string>("Descricao")
-                        .IsRequired()
-                        .HasColumnType("varchar(max)");
-
-                    b.Property<string>("Funcionario")
-                        .IsRequired()
-                        .HasColumnType("varchar(max)");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Titulo")
-                        .IsRequired()
-                        .HasColumnType("varchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Relatos", "Bugs");
                 });
 
             modelBuilder.Entity("Connect.Auth.DTO.RequisicoesDTO", b =>

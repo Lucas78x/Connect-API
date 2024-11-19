@@ -18,6 +18,8 @@ namespace Connect.Auth.Context
             ComunicadosEntityConfiguration(modelBuilder);
             AtestadoEntityConfiguration(modelBuilder);
             FeriasEntityConfiguration(modelBuilder);
+            FolhaPontoEntityConfiguration(modelBuilder);
+            RelatoBugEntityConfiguration(modelBuilder);
         }
     }
 }

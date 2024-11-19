@@ -4,6 +4,7 @@ using Connect.Auth.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Connect.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20241112181440_FolhaImp")]
+    partial class FolhaImp
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -155,29 +158,29 @@ namespace Connect.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime>("DataAtual")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("DataAtual");
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("DataCriacao")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("DataCriacao");
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("HorasTrabalhadas")
-                        .IsRequired()
-                        .HasColumnType("varchar(max)");
+                    b.Property<Guid>("FuncionarioId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("HorasTrabalhadas")
+                        .HasColumnType("int");
 
                     b.Property<Guid>("OwnerId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("UrlPdf")
                         .IsRequired()
-                        .HasColumnType("varchar(max)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OwnerId");
+                    b.HasIndex("FuncionarioId");
 
-                    b.ToTable("Folha", "Funcionarios");
+                    b.ToTable("Folha");
                 });
 
             modelBuilder.Entity("Connect.Auth.DTO.FuncionarioDTO", b =>
@@ -295,42 +298,6 @@ namespace Connect.Migrations
                     b.ToTable("Mensagem", "Chat");
                 });
 
-            modelBuilder.Entity("Connect.Auth.DTO.RelatoBugDTO", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<DateTime>("Data")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("Data");
-
-                    b.Property<DateTime>("DataCriacao")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("DataCriacao");
-
-                    b.Property<string>("Descricao")
-                        .IsRequired()
-                        .HasColumnType("varchar(max)");
-
-                    b.Property<string>("Funcionario")
-                        .IsRequired()
-                        .HasColumnType("varchar(max)");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Titulo")
-                        .IsRequired()
-                        .HasColumnType("varchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Relatos", "Bugs");
-                });
-
             modelBuilder.Entity("Connect.Auth.DTO.RequisicoesDTO", b =>
                 {
                     b.Property<Guid>("Id")
@@ -394,8 +361,8 @@ namespace Connect.Migrations
                 {
                     b.HasOne("Connect.Auth.DTO.FuncionarioDTO", "Funcionario")
                         .WithMany()
-                        .HasForeignKey("OwnerId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .HasForeignKey("FuncionarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Funcionario");
