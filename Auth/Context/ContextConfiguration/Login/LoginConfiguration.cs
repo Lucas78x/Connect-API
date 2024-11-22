@@ -26,6 +26,11 @@ namespace Connect.Auth.Context.ContextConfiguration.Login
                 .HasColumnType("varchar(max)")
                 .IsRequired();
 
+            builder
+                  .Property(x => x.FirstLogin)
+                  .HasColumnType("bit")
+                  .IsRequired()
+                  .HasDefaultValue(true);
 
             builder
                 .HasOne(l => l.Funcionario)

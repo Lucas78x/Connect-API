@@ -49,10 +49,24 @@ namespace Connect.Controllers
                 return Unauthorized();
             }
 
-            login.Id = result.Id;
-            login.Genero = result.Funcionario.Genero.GetHashCode();
+            login.SetId(result.Id);
+            login.SetGenero (result.Funcionario.Genero.GetHashCode());
+            login.SetFirstLogin(result.FirstLogin);
 
             return Ok(login);
+        }
+
+        [HttpPost("ChangePassword")]
+        public async Task<ActionResult<string>> ChangePassword([FromBody] ChangePasswordModel changePassword)
+        {
+            var result = await _mediator.Send(new AlterarSenhaUsuarioQuery(changePassword));
+
+            if (result == null)
+            {
+                return Unauthorized();
+            }
+
+            return Ok();
         }
 
         [HttpGet("funcionario")]

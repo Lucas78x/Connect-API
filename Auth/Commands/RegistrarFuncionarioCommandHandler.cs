@@ -30,8 +30,9 @@ namespace Connect.Auth.Commands
             {
                 _context.Funcionarios.Add(request.Login.Funcionario);
                 request.Login.PasswordHash = SHA256Encrypt.Encrypt(request.Login.PasswordHash);
-                _context.Logins.Add(request.Login);
+                request.Login.SetFirstLogin();
 
+                _context.Logins.Add(request.Login);
                 await _context.SaveChangesAsync(cancellationToken);
 
                 return request.Login;
