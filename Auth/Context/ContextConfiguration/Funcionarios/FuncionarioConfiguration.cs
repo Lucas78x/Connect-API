@@ -39,6 +39,12 @@ namespace Connect.Auth.Context.ContextConfiguration.Funcionarios
                 .IsRequired();
 
             builder
+               .Property(x => x.Telefone)
+               .HasColumnType("varchar")
+               .HasMaxLength(11)
+               .IsRequired();
+
+            builder
                 .Property(x => x.Genero)
                 .HasColumnType("int")
                 .IsRequired();

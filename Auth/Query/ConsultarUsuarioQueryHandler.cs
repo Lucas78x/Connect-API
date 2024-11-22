@@ -21,7 +21,7 @@ namespace Connect.Auth.Handlers
             var password = SHA256Encrypt.Encrypt(request.Password);
             var usuario = await _context.Logins
                 .Include(u => u.Funcionario)  
-                .Where(u => u.Username == request.Username && u.PasswordHash == password)
+                .Where(u => u.Email == request.Email && u.PasswordHash == password)
                 .FirstOrDefaultAsync(cancellationToken);
 
 

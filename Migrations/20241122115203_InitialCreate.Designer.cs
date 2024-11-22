@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Connect.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20241112181440_FolhaImp")]
-    partial class FolhaImp
+    [Migration("20241122115203_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -158,29 +158,29 @@ namespace Connect.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime>("DataAtual")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasColumnName("DataAtual");
 
                     b.Property<DateTime>("DataCriacao")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasColumnName("DataCriacao");
 
-                    b.Property<Guid>("FuncionarioId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("HorasTrabalhadas")
-                        .HasColumnType("int");
+                    b.Property<string>("HorasTrabalhadas")
+                        .IsRequired()
+                        .HasColumnType("varchar(max)");
 
                     b.Property<Guid>("OwnerId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("UrlPdf")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FuncionarioId");
+                    b.HasIndex("OwnerId");
 
-                    b.ToTable("Folha");
+                    b.ToTable("Folha", "Funcionarios");
                 });
 
             modelBuilder.Entity("Connect.Auth.DTO.FuncionarioDTO", b =>
@@ -228,6 +228,11 @@ namespace Connect.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("varchar");
 
+                    b.Property<string>("Telefone")
+                        .IsRequired()
+                        .HasMaxLength(11)
+                        .HasColumnType("varchar");
+
                     b.HasKey("Id");
 
                     b.ToTable("Funcionario", "Funcionarios");
@@ -241,17 +246,16 @@ namespace Connect.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("varchar(max)");
+
                     b.Property<Guid>("FuncionarioId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("PasswordHash")
                         .IsRequired()
                         .HasColumnType("varchar(max)");
-
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("varchar");
 
                     b.HasKey("Id");
 
@@ -296,6 +300,42 @@ namespace Connect.Migrations
                     b.HasIndex("RemetenteId");
 
                     b.ToTable("Mensagem", "Chat");
+                });
+
+            modelBuilder.Entity("Connect.Auth.DTO.RelatoBugDTO", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("Data")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("Data");
+
+                    b.Property<DateTime>("DataCriacao")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("DataCriacao");
+
+                    b.Property<string>("Descricao")
+                        .IsRequired()
+                        .HasColumnType("varchar(max)");
+
+                    b.Property<string>("Funcionario")
+                        .IsRequired()
+                        .HasColumnType("varchar(max)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Titulo")
+                        .IsRequired()
+                        .HasColumnType("varchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Relatos", "Bugs");
                 });
 
             modelBuilder.Entity("Connect.Auth.DTO.RequisicoesDTO", b =>
@@ -361,8 +401,8 @@ namespace Connect.Migrations
                 {
                     b.HasOne("Connect.Auth.DTO.FuncionarioDTO", "Funcionario")
                         .WithMany()
-                        .HasForeignKey("FuncionarioId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("OwnerId")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Funcionario");

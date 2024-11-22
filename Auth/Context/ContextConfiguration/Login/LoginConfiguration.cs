@@ -15,9 +15,9 @@ namespace Connect.Auth.Context.ContextConfiguration.Login
 
 
             builder
-                .Property(x => x.Username)
+                .Property(x => x.Email)
                 .HasColumnType("varchar")
-                .HasMaxLength(20)
+                .HasColumnType("varchar(max)")
                 .IsRequired();
 
 

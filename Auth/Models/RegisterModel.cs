@@ -5,7 +5,6 @@ namespace Connect.Auth.Models
     public class RegisterModel
     {
         public long Id { get; set; }
-        public string Username { get; set; }
         public string PasswordHash { get; set; }
 
         //Funcionario
@@ -13,6 +12,7 @@ namespace Connect.Auth.Models
         public string Sobrenome { get; set; }
         public string CPF { get; set; }
         public string RG { get; set; }
+        public string Telefone { get; set; }
         public int Genero { get; set; }
         public string Email { get; set; }
         public DateTime DataNascimento { get; set; }

@@ -225,6 +225,11 @@ namespace Connect.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("varchar");
 
+                    b.Property<string>("Telefone")
+                        .IsRequired()
+                        .HasMaxLength(11)
+                        .HasColumnType("varchar");
+
                     b.HasKey("Id");
 
                     b.ToTable("Funcionario", "Funcionarios");
@@ -238,17 +243,16 @@ namespace Connect.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("varchar(max)");
+
                     b.Property<Guid>("FuncionarioId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("PasswordHash")
                         .IsRequired()
                         .HasColumnType("varchar(max)");
-
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("varchar");
 
                     b.HasKey("Id");
 

@@ -25,8 +25,8 @@ namespace Connect.Controllers
         public async Task<ActionResult<int>> Register([FromBody]RegisterModel register)
         {
             
-            var func = new FuncionarioDTO(register.Nome, register.Sobrenome, register.CPF, register.RG, (TipoGeneroEnum)register.Genero, register.Email, register.DataNascimento, register.Cargo, (TipoPermissaoEnum)register.Permissao);
-            var login = new LoginDTO(register.Username, register.PasswordHash, func);
+            var func = new FuncionarioDTO(register.Nome, register.Sobrenome, register.CPF, register.RG,register.Telefone, (TipoGeneroEnum)register.Genero, register.Email, register.DataNascimento, register.Cargo, (TipoPermissaoEnum)register.Permissao);
+            var login = new LoginDTO(register.Email, register.PasswordHash, func);
 
             var funcModel = await _mediator.Send(new RegistrarFuncionarioCommand(login));
             if (funcModel != null)
@@ -43,7 +43,7 @@ namespace Connect.Controllers
         public async Task<ActionResult<string>> Login([FromBody]LoginModel login)
         {
             
-            var result = await _mediator.Send(new ConsultarUsuarioQuery(login.Username,login.PasswordHash));
+            var result = await _mediator.Send(new ConsultarUsuarioQuery(login.Email,login.PasswordHash));
             if (result == null)
             {
                 return Unauthorized();
